@@ -10,8 +10,8 @@ module.exports.handler = async (event, context) => {
     });
     const jsonData = await response.json();
     return {
-      ok: response.ok,
-      statusCode: response.status,
+      /* ok: response.ok, */
+      statusCode: 200/* response.status */,
       body: JSON.stringify(jsonData),
     }
   } catch (err) {
