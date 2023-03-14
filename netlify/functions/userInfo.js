@@ -18,7 +18,7 @@ module.exports.handler = async (event) => {
     console.log(err)
     return {
       ok: false,
-      statusCode: JSON.stringify(err.status) || 404,
+      statusCode: err.status || 404,
       body: JSON.stringify(err),
     }
   }
