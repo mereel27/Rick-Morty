@@ -1,8 +1,5 @@
 
 module.exports.handler = async (event, context) => {
-  console.log(event)
-  console.log(context)
-  
   try {
     const { token } = event.queryStringParameters;
     const response = await fetch(`https://www.googleapis.com/oauth2/v1/userinfo?token=${token}`, {
