@@ -2,8 +2,6 @@
   from = "/api/*"
   to = "/.netlify/functions/:splat"
   status = 200
-  force = true
-  headers = {X-From = "Netlify"}
 
 [functions]
   directory = "netlify/functions"
