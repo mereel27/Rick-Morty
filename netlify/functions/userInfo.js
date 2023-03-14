@@ -21,7 +21,7 @@ module.exports.handler = async (event, context) => {
     return {
       ok: false,
       statusCode: err.status || 404,
-      body: err,
+      body: JSON.stringify(err),
     }
   }
 }
