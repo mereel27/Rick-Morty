@@ -15,14 +15,11 @@ module.exports.handler = async (event) => {
       body: JSON.stringify(jsonData),
     }
   } catch (err) {
-    /* const errorJson = await err.json(); */
-    /* return {
-      ok: false,
-      statusCode: err.status || 404,
-      body: JSON.stringify(err),
-    } */
-    /* return JSON.stringify(errorJson); */
     console.log(err)
-    return err;
+    return {
+      ok: false,
+      statusCode: JSON.stringify(err.status) || 404,
+      body: JSON.stringify(err),
+    }
   }
 }
