@@ -14,7 +14,7 @@
       $loading-grey;
     background-size: 200% 100%;
     background-position-x: 180%;
-    animation: .25s loading ease-in-out infinite;
+    animation: 1s loading ease-in-out infinite;
   }
 
   &__img {
@@ -35,7 +35,7 @@
   }
 
   &__species {
-    height: 18px;
+    height: 21px;
     border-radius: 4px;
     animation-delay: 0.06s;
   }

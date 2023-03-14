@@ -4,4 +4,7 @@
   gap: $gapY $gapX;
   justify-content: center;
   margin-bottom: 61px;
+  @media (max-width: 479px) {
+    gap: 32px;
+  }
 }

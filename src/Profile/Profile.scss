@@ -1,0 +1,35 @@
+.profile {
+  display: flex;
+  gap: 15px;
+  justify-content: flex-end;
+  margin-bottom: 26px;
+  @media (max-width: 479px) {
+    margin-bottom: 32px;
+  }
+
+  &__picture {
+    height: 40px;
+    border-radius: 50%;
+  }
+
+  &__name {
+    display: inline-flex;
+    align-items: center;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  &__login-button {
+    @extend %btn-reset;
+    height: 40px;
+    padding: 0 15px;
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.705);
+    background-color: rgba(100, 245, 71, 0.705);
+    border-radius: 6px;
+    &:hover {
+      background-color: $secondary-hover;
+    }
+  }
+}

@@ -21,6 +21,9 @@ header {
   max-width: 100%;
   margin-top: 20px;
   margin-bottom: 61px;
+  @media (max-width: 480px) {
+    margin-bottom: 32px;
+  }
 }
 
 h1,
@@ -68,6 +71,9 @@ img {
   width: 100%;
   padding: 0 20px;
   margin: 0 auto;
+  @media (max-width: 380px) {
+    padding: 0 24px;
+  }
 }
 
 .logo {
@@ -96,7 +102,7 @@ img {
   &__input {
     width: 100%;
     border: none;
-    padding: 16px 0;
+    padding: 15px 0;
     font-size: 16px;
     line-height: 1.5;
 
@@ -106,42 +112,10 @@ img {
   }
 }
 
-.profile {
-  display: flex;
-  gap: 15px;
-  justify-content: flex-end;
-  margin-bottom: 26px;
-
-  &__picture {
-    height: 40px;
-    border-radius: 50%;
-  }
-
-  &__name {
-    display: inline-flex;
-    align-items: center;
-    font-size: 12px;
-    font-weight: 600;
-  }
-}
-
-.login-button {
-  @extend %btn-reset;
-  height: 40px;
-  padding: 0 15px;
-  font-size: 12px;
-  font-weight: 600;
-  color: rgba(0, 0, 0, 0.705);
-  background-color: rgba(100, 245, 71, 0.705);
-  border-radius: 6px;
-  &:hover {
-    background-color: $secondary-hover;
-  }
-}
-
 @import './CharCard/CharCard.scss';
 @import './SkeletonList/SkeletonList.scss';
 @import './CharDetails/CharDetails.scss';
 @import './CharList/CharList.scss';
 @import './ErrorMessage/ErrorMessage.scss';
-@import './Pagination/Paginations.scss'
+@import './Pagination/Paginations.scss';
+@import './Profile/Profile.scss';

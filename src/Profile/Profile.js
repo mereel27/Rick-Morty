@@ -11,7 +11,7 @@ export default function Profile({profile, handleClick}) {
           <span className="profile__name">{profile.name}</span>
         </>
       )}
-      <button className="login-button" onClick={handleClick}>
+      <button className="profile__login-button" onClick={handleClick}>
         {profile ? 'logout' : 'login'}
       </button>
     </div>
