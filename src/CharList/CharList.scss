@@ -1,0 +1,7 @@
+.characters-box {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $gapY $gapX;
+  justify-content: center;
+  margin-bottom: 61px;
+}

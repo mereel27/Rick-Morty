@@ -1,0 +1,48 @@
+.pagination {
+  display: flex;
+  max-width: 500px;
+  width: 100%;
+  gap: 15px;
+  margin: 0 auto 50px;
+
+  &__button {
+    @extend %btn-reset;
+    font-size: 12px;
+    font-weight: 600;
+    height: 30px;
+    width: 40px;
+    padding: 0 10px;
+    background-color: rgba(100, 245, 71, 0.705);
+    border-radius: 4px;
+    &:hover {
+      background-color: $secondary-hover;
+    }
+  }
+
+  &__button--last {
+    margin-left: auto;
+  }
+
+  &__arrow {
+    width: 0.855rem;
+    height: 0.855rem;
+  }
+
+  &__arrow--right {
+    transform: rotate(180deg);
+  }
+
+  &__current {
+    display: flex;
+    align-items: center;
+    user-select: none;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 12px;
+    height: 30px;
+    width: 40px;
+    margin-left: auto;
+    border: 1px solid $secondary-color;
+    border-radius: 4px;
+  }
+}

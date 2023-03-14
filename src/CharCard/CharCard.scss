@@ -1,0 +1,39 @@
+.character {
+  border-radius: 4px;
+  box-shadow: 0px 1px 5px 0px #00000033;
+  overflow: hidden;
+  width: calc((100% - $gapX * 3) / 4);
+  transition: transform 0.25s ease-in-out;
+
+  @media (max-width: 959px) {
+    width: calc((100% - $gapX * 2) / 3);
+  }
+
+  @media (max-width: 767px) {
+    width: calc((100% - $gapX) / 2);
+  }
+
+  @media (max-width: 479px) {
+    width: 100%;
+  }
+
+  &__image {
+    width: 100%;
+    margin-bottom: 12px;
+  }
+
+  &__info {
+    padding: 12px 16px;
+  }
+
+  &__name {
+    font-size: 20px;
+    line-height: 30px;
+    font-weight: 500;
+    letter-spacing: 0.15;
+  }
+  &:hover {
+    transform: translateY(-5px);
+    cursor: pointer;
+  }
+}
