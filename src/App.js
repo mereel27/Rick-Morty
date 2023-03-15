@@ -1,9 +1,8 @@
 import './App.scss';
-import '@fontsource/roboto';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
-
+import "@fontsource/karla/700.css";
 
 import { useGoogleLogin, googleLogout } from '@react-oauth/google';
 import { useEffect, useState } from 'react';

@@ -1,5 +1,4 @@
 import { useLoaderData, useNavigate } from 'react-router-dom';
-import "@fontsource/karla/700.css";
 
 export default function CharDetails() {
   const navigate = useNavigate();
