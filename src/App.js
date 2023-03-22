@@ -19,7 +19,6 @@ import SkeletonList from './SkeletonList/SkeletonList';
 (async () => {
   const localToken = localStorage.getItem('access_token');
   const profile = localStorage.getItem('profile');
-  console.log(localToken);
   if (localToken) {
     const response = await fetch(`/api/userInfo?token=${localToken}`);
     if (!response.ok) {
@@ -32,7 +31,6 @@ import SkeletonList from './SkeletonList/SkeletonList';
 })();
 
 function App() {
-  console.log('hello');
   const isSingleCharacter = useMatch('/character/*');
   const [searchParams, setSearchParams] = useSearchParams();
   const [characters, setCharacters] = useState(null);
