@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App, { profileLoader } from './App';
+import App from './App';
 import CharDetails, { charLoader } from './CharDetails/CharDetails';
 import CharList from './CharList/CharList';
 import ErrorMessage from './ErrorMessage/ErrorMessage';
@@ -16,7 +16,6 @@ const router = createBrowserRouter([
   {
     element: <App />,
     path: '/',
-    loader: profileLoader,
     errorElement: <ErrorMessage />,
     children: [
       {

@@ -9,7 +9,6 @@ import { useCallback, useEffect, useState } from 'react';
 import {
   Outlet,
   useMatch,
-  useLoaderData,
   useSearchParams,
   Link,
 } from 'react-router-dom';
@@ -22,12 +21,27 @@ import NotFound from './ErrorMessage/NotFound';
 import ErrorMessage from './ErrorMessage/ErrorMessage';
 import SkeletonList from './SkeletonList/SkeletonList';
 
+const checkProfile = async () => {
+  const localToken = localStorage.getItem('access_token');
+  console.log(localToken)
+  if (localToken) {
+    const response = await fetch(`/api/userInfo?token=${localToken}`);
+    if (!response.ok) {
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('profile');
+    }
+  }
+};
+
+checkProfile();
+
+
 function App() {
   const isSingleCharacter = useMatch('/character/*');
   const [searchParams, setSearchParams] = useSearchParams();
   const [characters, setCharacters] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [profile, setProfile] = useState(useLoaderData() || null);
+  const [profile, setProfile] = useState(JSON.parse(localStorage.getItem('profile')) || null);
   const [searchValue, setSearchValue] = useState(
     getNameQuery(searchParams) || ''
   );
@@ -45,6 +59,7 @@ function App() {
         })
         .then((data) => {
           localStorage.setItem('access_token', token);
+          localStorage.setItem('profile', JSON.stringify(data));
           setProfile(data);
         })
         .catch((error) => console.log(error));
@@ -53,6 +68,7 @@ function App() {
 
   const handleLogout = () => {
     localStorage.removeItem('access_token');
+    localStorage.removeItem('profile');
     setProfile(null);
     googleLogout();
   };
@@ -157,16 +173,3 @@ function App() {
 }
 
 export default App;
-
-export const profileLoader = async () => {
-  const localToken = localStorage.getItem('access_token');
-  if (localToken) {
-    const response = await fetch(`/api/userInfo?token=${localToken}`);
-    if (!response.ok) {
-      localStorage.removeItem('access_token');
-      return null;
-    }
-    return response.json();
-  }
-  return null;
-};
