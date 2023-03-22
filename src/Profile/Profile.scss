@@ -20,16 +20,12 @@
   }
 
   &__login-button {
-    @extend %btn;
+    @extend %btn, %btn-accent;
     height: 40px;
     padding: 0 15px;
     font-size: 12px;
     font-weight: 600;
     color: rgba(0, 0, 0, 0.705);
-    background-color: rgba(100, 245, 71, 0.705);
     border-radius: 6px;
-    &:hover {
-      background-color: $secondary-hover;
-    }
   }
 }

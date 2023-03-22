@@ -2,10 +2,10 @@ import './App.scss';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
-import "@fontsource/karla/700.css";
+import '@fontsource/karla/700.css';
 
 import { useGoogleLogin, googleLogout } from '@react-oauth/google';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {
   Outlet,
   useMatch,
@@ -14,8 +14,8 @@ import {
 } from 'react-router-dom';
 
 import logo from './assets/img/logo.png';
-import SearchIcon from './Icons/SearchIcon';
 import Profile from './Profile/Profile';
+import SearchBar from './SearchBar/SearchBar';
 import { sortByName, getNameQuery } from './utils/utils';
 import NotFound from './ErrorMessage/NotFound';
 import ErrorMessage from './ErrorMessage/ErrorMessage';
@@ -82,11 +82,16 @@ function App() {
       );
   }, [searchParams, isSingleCharacter]);
 
-  const handleSearchInputChange = ({ target: { value } }) => {
+  const handleSearchInputChange = useCallback(({ target: { value } }) => {
     setSearchValue(value);
     const params = value ? { name: value } : null;
     setSearchParams(params || {});
-  };
+  }, []);
+
+  const handleClear = useCallback(() => {
+    setSearchValue('');
+    setSearchParams({});
+  }, []);
 
   const changePage = (direction = 'first') => {
     const nameValue = searchParams.get('name');
@@ -110,7 +115,10 @@ function App() {
       {!isSingleCharacter && (
         <header>
           <div className="container">
-            <Profile profile={profile} handleClick={profile ? handleLogout : login}/>
+            <Profile
+              profile={profile}
+              handleClick={profile ? handleLogout : login}
+            />
             <img
               className="logo"
               src={logo}
@@ -118,17 +126,11 @@ function App() {
               width="600"
               height="200"
             />
-            <div className="search">
-              <SearchIcon />
-              <input
-                type="text"
-                id="search"
-                className="search__input"
-                placeholder="Filter by name..."
-                value={searchValue}
-                onChange={handleSearchInputChange}
-              />
-            </div>
+            <SearchBar
+              value={searchValue}
+              handleChange={handleSearchInputChange}
+              handleClear={handleClear}
+            />
           </div>
         </header>
       )}
