@@ -9,6 +9,8 @@ export default memo(function SearchBar({ value, handleChange, handleClear }) {
       <input
         type="text"
         id="search"
+        aria-label="search" 
+        role="searchbox"
         className="search__input"
         placeholder="Filter by name..."
         value={value}
