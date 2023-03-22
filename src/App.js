@@ -11,6 +11,7 @@ import {
   useMatch,
   useLoaderData,
   useSearchParams,
+  Link,
 } from 'react-router-dom';
 
 import logo from './assets/img/logo.png';
@@ -86,11 +87,13 @@ function App() {
     setSearchValue(value);
     const params = value ? { name: value } : null;
     setSearchParams(params || {});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleClear = useCallback(() => {
     setSearchValue('');
     setSearchParams({});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const changePage = (direction = 'first') => {
@@ -119,13 +122,15 @@ function App() {
               profile={profile}
               handleClick={profile ? handleLogout : login}
             />
-            <img
-              className="logo"
-              src={logo}
-              alt="logo"
-              width="600"
-              height="200"
-            />
+            <Link to="/">
+              <img
+                className="logo"
+                src={logo}
+                alt="Rick and Morty characters"
+                width="600"
+                height="200"
+              />
+            </Link>
             <SearchBar
               value={searchValue}
               handleChange={handleSearchInputChange}
