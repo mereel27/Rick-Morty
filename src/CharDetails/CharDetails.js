@@ -1,16 +1,9 @@
-import { useLoaderData, useNavigate } from 'react-router-dom';
+import { useLoaderData, useNavigate, defer, Await } from 'react-router-dom';
+import { Suspense } from 'react';
 
 export default function CharDetails() {
   const navigate = useNavigate();
-  const {
-    image,
-    name,
-    origin: { name: originName },
-    species,
-    status,
-    type,
-    gender,
-  } = useLoaderData();
+  const data = useLoaderData();
   return (
     <>
       <button className="link-back" onClick={() => navigate(-1)}>
@@ -28,37 +21,48 @@ export default function CharDetails() {
         </svg>
         <span className="link__text">GO BACK</span>
       </button>
-      <article className="details">
-        <img className="details__image" src={image} alt={name} />
-        <h1 className="details__name">{name}</h1>
-        <span className="details__label">Information</span>
-        <div className="details__data">
-          <div className="details__data__box">
-            <span className="details__data__name">Gender</span>
-            <span className="details__data__value">{gender}</span>
-          </div>
-          <div className="details__data__box">
-            <span className="details__data__name">Status</span>
-            <span className="details__data__value">{status}</span>
-          </div>
-          <div className="details__data__box">
-            <span className="details__data__name">Specie</span>
-            <span className="details__data__value">{species}</span>
-          </div>
-          <div className="details__data__box">
-            <span className="details__data__name">Origin</span>
-            <span className="details__data__value">{originName}</span>
-          </div>
-          <div className="details__data__box">
-            <span className="details__data__name">Type</span>
-            <span className="details__data__value">{type || 'Unknown'}</span>
-          </div>
-        </div>
-      </article>
+      <Suspense fallback={<div className="lds-dual-ring"></div>}>
+        <Await resolve={data.details}>
+          {({ image, name, origin: { name: originName }, species, status, type, gender }) => (
+            <article className="details">
+              <img className="details__image" src={image} alt={name} />
+              <h1 className="details__name">{name}</h1>
+              <span className="details__label">Information</span>
+              <div className="details__data">
+                <div className="details__data__box">
+                  <span className="details__data__name">Gender</span>
+                  <span className="details__data__value">{gender}</span>
+                </div>
+                <div className="details__data__box">
+                  <span className="details__data__name">Status</span>
+                  <span className="details__data__value">{status}</span>
+                </div>
+                <div className="details__data__box">
+                  <span className="details__data__name">Specie</span>
+                  <span className="details__data__value">{species}</span>
+                </div>
+                <div className="details__data__box">
+                  <span className="details__data__name">Origin</span>
+                  <span className="details__data__value">{originName}</span>
+                </div>
+                <div className="details__data__box">
+                  <span className="details__data__name">Type</span>
+                  <span className="details__data__value">
+                    {type || 'Unknown'}
+                  </span>
+                </div>
+              </div>
+            </article>
+          )}
+        </Await>
+      </Suspense>
     </>
   );
 }
 
 export async function charLoader({ params }) {
-  return await fetch(`https://rickandmortyapi.com/api/character/${params.id}`);
+  const data = fetch(
+    `https://rickandmortyapi.com/api/character/${params.id}`
+  ).then((response) => response.json());
+  return defer({ details: data });
 }

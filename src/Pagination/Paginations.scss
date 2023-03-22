@@ -6,7 +6,7 @@
   margin: 0 auto 50px;
 
   &__button {
-    @extend %btn-reset;
+    @extend %btn;
     font-size: 12px;
     font-weight: 600;
     height: 30px;

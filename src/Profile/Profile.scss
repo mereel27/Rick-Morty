@@ -20,7 +20,7 @@
   }
 
   &__login-button {
-    @extend %btn-reset;
+    @extend %btn;
     height: 40px;
     padding: 0 15px;
     font-size: 12px;
