@@ -16,20 +16,6 @@ import NotFound from './ErrorMessage/NotFound';
 import ErrorMessage from './ErrorMessage/ErrorMessage';
 import SkeletonList from './SkeletonList/SkeletonList';
 
-(async () => {
-  const localToken = localStorage.getItem('access_token');
-  const profile = localStorage.getItem('profile');
-  if (localToken) {
-    const response = await fetch(`/api/userInfo?token=${localToken}`);
-    if (!response.ok) {
-      localStorage.removeItem('access_token');
-      localStorage.removeItem('profile');
-    }
-  } else if (profile) {
-    localStorage.removeItem('profile');
-  }
-})();
-
 function App() {
   const isSingleCharacter = useMatch('/character/*');
   const [searchParams, setSearchParams] = useSearchParams();
@@ -87,6 +73,22 @@ function App() {
       })
       .finally(() => setLoading(false));
   };
+
+  useEffect(() => {
+    (async () => {
+      const localToken = localStorage.getItem('access_token');
+      const profile = localStorage.getItem('profile');
+      if (localToken) {
+        const response = await fetch(`/api/userInfo?token=${localToken}`);
+        if (!response.ok) {
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('profile');
+        }
+      } else if (profile) {
+        localStorage.removeItem('profile');
+      }
+    })();
+  }, [])
 
   useEffect(() => {
     !isSingleCharacter &&
