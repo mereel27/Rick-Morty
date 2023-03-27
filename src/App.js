@@ -5,7 +5,7 @@ import '@fontsource/roboto/700.css';
 import '@fontsource/karla/700.css';
 
 import { useGoogleLogin, googleLogout } from '@react-oauth/google';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useRef } from 'react';
 import { Outlet, useMatch, useSearchParams, Link } from 'react-router-dom';
 
 import logo from './assets/img/logo.png';
@@ -16,11 +16,16 @@ import NotFound from './ErrorMessage/NotFound';
 import ErrorMessage from './ErrorMessage/ErrorMessage';
 import SkeletonList from './SkeletonList/SkeletonList';
 
+let timeoutID;
+
 function App() {
+  const mounted = useRef(false);
+  const mounted2 = useRef(false);
   const isSingleCharacter = useMatch('/character/*');
   const [searchParams, setSearchParams] = useSearchParams();
   const [characters, setCharacters] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(searchParams.get('page') || '1');
   const [profile, setProfile] = useState(
     JSON.parse(localStorage.getItem('profile')) || null
   );
@@ -55,23 +60,26 @@ function App() {
     googleLogout();
   };
 
-  const fetchData = (url) => {
+  const fetchData = (delay = false) => {
     setLoading(true);
-    fetch(url)
-      .then((response) => {
-        if (response.ok) {
-          setError(null);
-          return response.json();
-        }
-        throw response;
-      })
-      .then((data) =>
-        setCharacters({ ...data, results: sortByName(data.results) })
-      )
-      .catch((error) => {
-        setError(error);
-      })
-      .finally(() => setLoading(false));
+    clearTimeout(timeoutID);
+    timeoutID = setTimeout(() => {
+      fetch(`https://rickandmortyapi.com/api/character/?${searchParams.toString()}`)
+        .then((response) => {
+          if (response.ok) {
+            setError(null);
+            return response.json();
+          }
+          throw response;
+        })
+        .then((data) =>
+          setCharacters({ ...data, results: sortByName(data.results) })
+        )
+        .catch((error) => {
+          setError(error);
+        })
+        .finally(() => setLoading(false));
+    }, delay ? 500 : 0);
   };
 
   useEffect(() => {
@@ -88,14 +96,30 @@ function App() {
         localStorage.removeItem('profile');
       }
     })();
-  }, [])
+  }, []);
 
   useEffect(() => {
-    !isSingleCharacter &&
-      fetchData(
-        `https://rickandmortyapi.com/api/character/?${searchParams.toString()}`
-      );
-  }, [searchParams, isSingleCharacter]);
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (mounted.current) {
+      fetchData(searchValue);
+    } else {
+      mounted.current = true;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchValue]);
+
+  useEffect(() => {
+    if (mounted2.current) {
+      fetchData();
+    } else {
+      mounted2.current = true;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page]);
 
   const handleSearchInputChange = useCallback(({ target: { value } }) => {
     setSearchValue(value);
@@ -113,18 +137,21 @@ function App() {
   const changePage = (direction = 'first') => {
     const nameValue = searchParams.get('name');
     const nameParams = nameValue && { name: nameValue };
+    let page;
     if (direction === 'first') {
-      characters?.info?.prev && setSearchParams({ page: 1, ...nameParams });
-      return;
+      page = characters?.info?.prev ? 1 : undefined;
+    } else if (direction === 'last') {
+      page = characters?.info?.pages || undefined;
+    } else {
+      const link = characters?.info?.[direction];
+      const newPage = link ? new URL(link).searchParams.get('page') : null;
+      page = newPage || undefined;
     }
-    if (direction === 'last') {
-      const lastPage = characters?.info?.pages;
-      lastPage && setSearchParams({ page: lastPage, ...nameParams });
-      return;
+
+    if (page) {
+      setSearchParams({ page: page, ...nameParams });
+      setPage(page);
     }
-    const link = characters?.info?.[direction];
-    const newPage = new URL(link).searchParams.get('page');
-    link && setSearchParams({ page: newPage, ...nameParams });
   };
 
   return (
@@ -159,7 +186,11 @@ function App() {
             <SkeletonList length={characters?.results?.length} />
           )}
 
-          {!error && <Outlet context={{ characters, changePage, loading }} />}
+          {!error && (
+            <Outlet
+              context={{ characters, changePage, loading, currentPage: page }}
+            />
+          )}
 
           {!loading && searchValue && error && <NotFound />}
 

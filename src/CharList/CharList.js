@@ -4,14 +4,14 @@ import Pagination from '../Pagination/Pagination';
 import { useEffect } from 'react';
 import { saveScroll } from '../utils/utils';
 
-const currentPage = (nextUrl, lastPage) => {
+/* const currentPage = (nextUrl, lastPage) => {
   if (!nextUrl) return lastPage || 0;
   const nextPage = new URL(nextUrl).searchParams.get('page');
   return nextPage ? nextPage - 1 : lastPage || 0;
-};
+}; */
 
 export default function CharList() {
-  const { characters, loading } = useOutletContext();
+  const { characters, loading, currentPage } = useOutletContext();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -42,7 +42,7 @@ export default function CharList() {
         start={!characters?.info?.prev}
         end={!characters?.info?.next}
         lastPage={characters?.info?.pages}
-        currentPage={currentPage(characters?.info?.next, characters?.info?.pages)}
+        currentPage={currentPage}
       />
     </>
   );
