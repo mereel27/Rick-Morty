@@ -5,6 +5,7 @@
   border: 1px solid rgba(0, 0, 0, 0.5);
   border-radius: 8px;
   padding: 0 16px;
+  transition: all .25s cubic-bezier(0.785, 0.135, 0.15, 0.86);
 
   &:focus-within {
     border: 1px solid $accent-color;
