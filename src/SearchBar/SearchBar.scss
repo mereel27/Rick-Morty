@@ -14,11 +14,14 @@
   &__icon {
     margin-right: 8px;
     color: rgba(0, 0, 0, 0.54);
+    flex-shrink: 0;
   }
 
   &__clear-button {
     @extend %btn, %btn-accent;
-    margin-left: 20px;
+    margin-left: 8px;
+    width: 25px;
+    padding: 2px;
     font-size: 16px;
     aspect-ratio: 1/1;
     border-radius: 9999px;
