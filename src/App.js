@@ -6,7 +6,7 @@ import '@fontsource/karla/700.css';
 
 import { useGoogleLogin, googleLogout } from '@react-oauth/google';
 import { useCallback, useEffect, useState, useRef } from 'react';
-import { Outlet, useMatch, useSearchParams, Link } from 'react-router-dom';
+import { Outlet, useMatch, useSearchParams, Link, useLocation} from 'react-router-dom';
 
 import logo from './assets/img/logo.png';
 import Profile from './Profile/Profile';
@@ -33,6 +33,8 @@ function App() {
     getNameQuery(searchParams) || ''
   );
   const [error, setError] = useState(null);
+
+  console.log(useLocation())
 
   const login = useGoogleLogin({
     onSuccess: (response) => {
@@ -125,14 +127,12 @@ function App() {
     setSearchValue(value);
     const params = value ? { name: value } : null;
     setSearchParams(params || {});
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [setSearchParams]);
 
   const handleClear = useCallback(() => {
     setSearchValue('');
     setSearchParams({});
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [setSearchParams]);
 
   const changePage = (direction = 'first') => {
     const nameValue = searchParams.get('name');

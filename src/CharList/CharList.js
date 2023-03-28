@@ -1,4 +1,4 @@
-import { useOutletContext, useNavigate } from 'react-router-dom';
+import { useOutletContext } from 'react-router-dom';
 import CharCard from '../CharCard/CharCard.js';
 import Pagination from '../Pagination/Pagination';
 import { useEffect } from 'react';
@@ -12,7 +12,6 @@ import { saveScroll } from '../utils/utils';
 
 export default function CharList() {
   const { characters, loading, currentPage } = useOutletContext();
-  const navigate = useNavigate();
 
   useEffect(() => {
     const scrollPos = localStorage.getItem('homeScrollPos');
@@ -34,7 +33,7 @@ export default function CharList() {
             <CharCard
               char={char}
               key={char.id}
-              handleClick={() => navigate(`/character/${char.id}`)}
+              link={`/character/${char.id}`}
             />
           ))}
       </section>

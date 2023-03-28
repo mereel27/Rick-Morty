@@ -1,6 +1,10 @@
 .character-skeleton {
   @extend .character;
 
+  &__wrapper {
+    @extend .character__wrapper;
+  }
+
   &__img,
   &__name,
   &__species {

@@ -1,12 +1,12 @@
-import { useLoaderData, useNavigate, defer, Await } from 'react-router-dom';
+import { useLoaderData, defer, Await, Link, useLocation } from 'react-router-dom';
 import { Suspense } from 'react';
 
 export default function CharDetails() {
-  const navigate = useNavigate();
+  const { state } = useLocation();
   const data = useLoaderData();
   return (
     <>
-      <button className="link-back" onClick={() => navigate(-1)}>
+      <Link className="link-back" to={`${state?.pathname || '/'}${state?.search || ''}`}>
         <svg
           width="16"
           height="16"
@@ -20,7 +20,7 @@ export default function CharDetails() {
           />
         </svg>
         <span className="link__text">GO BACK</span>
-      </button>
+      </Link>
       <Suspense fallback={<div className="lds-dual-ring"></div>}>
         <Await resolve={data.details}>
           {({ image, name, origin: { name: originName }, species, status, type, gender }) => (

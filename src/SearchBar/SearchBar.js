@@ -1,11 +1,11 @@
-import SearchIcon from '../Icons/SearchIcon';
 import { MdClear } from 'react-icons/md';
+import { HiOutlineSearch } from 'react-icons/hi';
 import { memo } from 'react';
 
 export default memo(function SearchBar({ value, handleChange, handleClear }) {
   return (
     <div className="search">
-      <SearchIcon />
+      <HiOutlineSearch className="search__icon"/>
       <input
         type="text"
         id="search"
