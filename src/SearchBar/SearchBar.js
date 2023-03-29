@@ -5,6 +5,7 @@ import { memo } from 'react';
 export default memo(function SearchBar({ value, handleChange, handleClear }) {
   return (
     <div className="search">
+      <div className="character__bg"></div>
       <HiOutlineSearch className="search__icon"/>
       <input
         type="text"

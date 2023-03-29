@@ -87,8 +87,14 @@ img {
   }
 }
 
-.logo {
-  max-height: 200px;
+.hero {
+  width: 100%;
+  max-width: 600px;
+  height: 200px;
+  background-image: url('../src/assets/img/logo.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
   margin: 0 auto 16px;
 }
 

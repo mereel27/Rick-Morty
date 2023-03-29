@@ -8,7 +8,6 @@ import { useGoogleLogin, googleLogout } from '@react-oauth/google';
 import { useCallback, useEffect, useState, useRef } from 'react';
 import { Outlet, useMatch, useSearchParams, Link, useLocation} from 'react-router-dom';
 
-import logo from './assets/img/logo.png';
 import Profile from './Profile/Profile';
 import SearchBar from './SearchBar/SearchBar';
 import { sortByName, getNameQuery } from './utils/utils';
@@ -164,13 +163,7 @@ function App() {
               handleClick={profile ? handleLogout : login}
             />
             <Link to="/">
-              <img
-                className="logo"
-                src={logo}
-                alt="Rick and Morty characters"
-                width="600"
-                height="200"
-              />
+              <div className='hero'></div>
             </Link>
             <SearchBar
               value={searchValue}
